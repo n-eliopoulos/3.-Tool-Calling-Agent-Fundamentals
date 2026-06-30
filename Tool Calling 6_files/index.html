@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 1: Tool Calling</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="18"><div class="player-progress-fill" style="width: 18%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="first-tool-end-to-end">
+  <h2>Building Your First Tool End-to-End</h2>
+
+  <p>Time to wire up the complete loop: define a tool → send a request → parse the <code>tool_use</code> block → execute a Python function → return the <code>tool_result</code> → get Claude's final response.</p>
+
+  <h3>The complete pattern</h3>
+  <pre><code># 1. Define the tool
+tools = [{"name": "lookup_regulatory_filing", ...}]
+
+# 2. Send request with tools
+response = client.messages_create(tools=tools, messages=[...])
+
+# 3. Check for tool_use in response
+for block in response.content:
+    if block.type == "tool_use":
+        # 4. Execute the actual function
+        result = execute_tool(block.name, block.input)
+        # 5. Return tool_result
+        messages.append({"role": "user", "content": [
+            {"type": "tool_result", "tool_use_id": block.id, "content": result}
+        ]})
+
+# 6. Get final response
+final = client.messages_create(tools=tools, messages=messages)</code></pre>
+
+  <aside class="callout">
+    <strong>Guided exercise:</strong> In the sandbox, build a <code>lookup_regulatory_filing</code> tool that takes a <code>filing_type</code> and <code>firm_id</code>, returns mock filing data, and wire up the full loop. You must complete each step — this is a gated exercise.
+  </aside>
+
+  <h3>What to watch for</h3>
+  <ul>
+    <li>The <code>tool_use_id</code> in the result must match the <code>id</code> from the <code>tool_use</code> block.</li>
+    <li>The tool result content must be a string (JSON-serialize objects).</li>
+    <li>Always check <code>response.stop_reason</code> — if it's <code>"tool_use"</code>, Claude expects you to execute and return results.</li>
+  </ul>
+
+  <aside class="key-takeaway">
+    This six-step pattern is the foundation of every tool-calling system. Once you can wire up one tool end-to-end, adding more tools is just repetition.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Building Your First Tool End-to-End</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 6 of 11</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 3: Agent Patterns (Framework-Free)</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="82"><div class="player-progress-fill" style="width: 82%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="planning-execution">
+  <h2>Planning-Execution Pattern</h2>
+
+  <p>A two-phase agent: first Claude generates a plan, then it executes each step. If a step fails, Claude re-plans from the current state. More structured than pure ReAct.</p>
+
+  <h3>Phase 1: Planning</h3>
+  <pre><code>plan_prompt = f"""Given this goal: {goal}
+And these available tools: {tool_descriptions}
+Generate a step-by-step plan as JSON:
+[{{"step": 1, "tool": "tool_name", "reason": "why this step"}}]"""
+
+plan = client.messages_create(messages=[{"role": "user", "content": plan_prompt}])
+steps = json.loads(plan.content[0].text)</code></pre>
+
+  <h3>Phase 2: Execution</h3>
+  <pre><code>for step in steps:
+    try:
+        result = execute_tool(step["tool"], step.get("args", {}))
+        state["completed"].append({**step, "result": result})
+    except Exception as e:
+        # Re-plan from current state
+        new_plan = replan(goal, state["completed"], str(e), tools)
+        steps = new_plan  # Continue with updated plan
+        break</code></pre>
+
+  <h3>When to use plan-then-execute</h3>
+  <ul>
+    <li><strong>Predictable tasks with known steps:</strong> The plan provides structure and auditability.</li>
+    <li><strong>Tasks requiring user approval:</strong> Show the plan before executing — the user can modify it.</li>
+    <li><strong>Debugging:</strong> A plan is easier to inspect than a ReAct trace.</li>
+  </ul>
+
+  <aside class="callout">
+    <strong>Try it:</strong> Implement plan-then-execute in the sandbox. Phase 1: Claude generates a JSON plan. Phase 2: Execute each step. If a step fails, ask Claude to re-plan from the current state.
+  </aside>
+
+  <aside class="key-takeaway">
+    Plan-then-execute trades flexibility for structure. Use it when you want auditability, user approval, or predictable execution order.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Planning-Execution Pattern</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 7 of 11</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

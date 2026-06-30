@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 1: Tool Calling</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="24"><div class="player-progress-fill" style="width: 24%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="parallel-tool-calling">
+  <h2>Parallel Tool Calling</h2>
+
+  <p>Claude can request multiple tool calls in a single response when it needs independent pieces of data. Instead of one <code>tool_use</code> block, you get two or more — each with its own <code>id</code>, <code>name</code>, and <code>input</code>.</p>
+
+  <h3>When Claude calls tools in parallel</h3>
+  <ul>
+    <li>The user asks about multiple independent entities: "Compare compliance status of firms A and B."</li>
+    <li>The query needs data from multiple sources that don't depend on each other.</li>
+    <li>Claude recognizes the data needs are independent and batches the calls.</li>
+  </ul>
+
+  <h3>Handling parallel calls</h3>
+  <pre><code># Claude returns multiple tool_use blocks
+tool_calls = [b for b in response.content if b.type == "tool_use"]
+
+# Execute all of them (can be done in parallel)
+results = []
+for call in tool_calls:
+    result = execute_tool(call.name, call.input)
+    results.append({
+        "type": "tool_result",
+        "tool_use_id": call.id,
+        "content": result
+    })
+
+# Return ALL results in a single message
+messages.append({"role": "user", "content": results})</code></pre>
+
+  <aside class="callout">
+    <strong>Try it:</strong> Send "Compare the compliance status of firms A and B" in the sandbox. Claude returns two <code>tool_use</code> blocks. Execute both and return the results together.
+  </aside>
+
+  <aside class="key-takeaway">
+    Always check for multiple <code>tool_use</code> blocks in a response. Return all results in a single message — Claude needs all of them to generate its final answer.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Parallel Tool Calling</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 8 of 11</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

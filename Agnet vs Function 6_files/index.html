@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 2: Agent vs. Function</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="53"><div class="player-progress-fill" style="width: 53%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="cost-of-agent-complexity">
+  <h2>The Cost of Agent Complexity</h2>
+
+  <p>Every layer of autonomy has a price. More LLM calls means more cost and latency. Loops can run away. State management adds code. Debugging is harder. Testing is harder. Quantify these costs before choosing an agent.</p>
+
+  <h3>The math</h3>
+  <table>
+    <tbody><tr><th>Approach</th><th>LLM Calls</th><th>Latency</th><th>Cost per Task</th></tr>
+    <tr><td>Smart function (no tools)</td><td>1</td><td>1–3s</td><td>$0.003–0.01</td></tr>
+    <tr><td>Smart function (with tools)</td><td>2</td><td>3–6s</td><td>$0.01–0.03</td></tr>
+    <tr><td>Bounded agent (3 iterations)</td><td>4–7</td><td>8–20s</td><td>$0.03–0.10</td></tr>
+    <tr><td>Autonomous agent (unbounded)</td><td>5–20+</td><td>15–60s+</td><td>$0.10–1.00+</td></tr>
+  </tbody></table>
+
+  <h3>Hidden costs</h3>
+  <ul>
+    <li><strong>Context window growth:</strong> Each iteration adds messages. By iteration 5, you're sending the full history — input tokens compound.</li>
+    <li><strong>Debugging time:</strong> A function fails the same way every time. An agent fails differently each run. Non-deterministic debugging is expensive.</li>
+    <li><strong>Testing complexity:</strong> Testing a function: mock inputs, assert outputs. Testing an agent: mock tool sequences, handle branching paths, verify stop conditions.</li>
+    <li><strong>Runaway risk:</strong> A bug in a function wastes one API call. A bug in an agent loop can burn through your token budget.</li>
+  </ul>
+
+  <aside class="callout">
+    <strong>Try it:</strong> The cost calculator below lets you model costs. Input your estimated tool calls per task, LLM calls per iteration, and expected iterations. Compare the cost of a function vs. an agent.
+  </aside>
+
+  <aside class="key-takeaway">
+    Agent complexity isn't free. A 5-iteration agent costs 5–10x more than a single-pass function and takes 5–10x longer. Make sure the task justifies the cost.
+  </aside>
+</section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 6 of 8</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

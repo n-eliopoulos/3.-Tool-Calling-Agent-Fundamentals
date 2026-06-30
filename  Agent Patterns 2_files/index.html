@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 3: Agent Patterns (Framework-Free)</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="68"><div class="player-progress-fill" style="width: 68%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="agent-loop">
+  <h2>The Agent Loop</h2>
+
+  <p>Every agent — regardless of framework — implements the same core pattern: <code>while not done: think → act → observe → update state</code>. The differences between frameworks are in how they manage state, select actions, and decide when to stop.</p>
+
+  <h3>The loop in pseudocode</h3>
+  <pre><code>messages = [{"role": "user", "content": goal}]
+
+while not done:
+    # THINK: Claude reasons about what to do next
+    response = claude(messages, tools)
+
+    # CHECK: Is Claude done? (no more tool calls)
+    if response.stop_reason != "tool_use":
+        done = True
+        break
+
+    # ACT: Execute the tool(s) Claude requested
+    results = execute_tools(response)
+
+    # OBSERVE: Add results to message history
+    messages.append(assistant_message(response))
+    messages.append(tool_results_message(results))
+
+    # UPDATE: Increment iteration counter, check budget
+    iterations += 1</code></pre>
+
+  <aside class="callout">
+    <strong>Try it:</strong> The agent loop visualizer below animates a 4-iteration example. Step through each phase: Claude reasons → selects a tool → you execute → result goes back → Claude reasons again → next tool → ... → final answer.
+  </aside>
+
+  <h3>What varies between implementations</h3>
+  <ul>
+    <li><strong>State:</strong> Just message history? Or an explicit state object?</li>
+    <li><strong>Stop conditions:</strong> Claude decides? Max iterations? Token budget?</li>
+    <li><strong>Error handling:</strong> Retry? Skip? Abort?</li>
+    <li><strong>Observability:</strong> What gets logged at each iteration?</li>
+  </ul>
+
+  <aside class="key-takeaway">
+    The agent loop is simple: think → act → observe → repeat. Everything else — frameworks, patterns, architectures — is variation on this core loop.
+  </aside>
+</section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 2 of 11</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

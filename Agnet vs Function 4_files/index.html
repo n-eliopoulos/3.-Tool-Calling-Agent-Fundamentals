@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 2: Agent vs. Function</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="47"><div class="player-progress-fill" style="width: 47%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="smart-functions">
+  <h2>Smart Functions: The 80% Solution</h2>
+
+  <p>A smart function calls an LLM with tools, handles errors, retries on failure, and returns structured output. No loop, no planning, no memory. Single pass. Handles most real-world tasks.</p>
+
+  <h3>The pattern</h3>
+  <pre><code>def analyze_filing(filing_id):
+    """Smart function: single-pass tool calling with error handling."""
+    filing = get_filing(filing_id)
+
+    response = client.messages_create(
+        model="claude-sonnet-4",
+        system="Analyze this regulatory filing. Return structured JSON.",
+        tools=[rule_lookup_tool, firm_profile_tool],
+        messages=[{"role": "user", "content": f"Analyze filing: {filing}"}],
+    )
+
+    # Handle tool calls (single round)
+    if response.stop_reason == "tool_use":
+        results = execute_all_tools(response)
+        response = client.messages_create(
+            tools=[rule_lookup_tool, firm_profile_tool],
+            messages=[..., results],
+        )
+
+    return parse_json(response.content[0].text)</code></pre>
+
+  <h3>Why this is usually enough</h3>
+  <ul>
+    <li><strong>Predictable cost:</strong> At most 2 LLM calls (initial + after tool results).</li>
+    <li><strong>Predictable latency:</strong> Bounded by the number of tool calls, which you control.</li>
+    <li><strong>Easy to test:</strong> Input → output. Mock the tools, assert the output.</li>
+    <li><strong>Easy to debug:</strong> Linear execution path. No loops to trace.</li>
+  </ul>
+
+  <aside class="callout">
+    <strong>Try it:</strong> Build an <code>analyze_filing</code> smart function in the sandbox. Single pass — no loop. Use 2 tools, handle errors, return structured output.
+  </aside>
+
+  <aside class="key-takeaway">
+    Before reaching for an agent, ask: "Can a single-pass function with tools solve this?" If yes, stop there. You'll save cost, latency, and debugging time.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Smart Functions: The 80% Solution</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 4 of 8</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

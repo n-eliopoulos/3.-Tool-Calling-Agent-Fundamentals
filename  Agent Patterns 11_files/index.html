@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 3: Agent Patterns (Framework-Free)</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="94"><div class="player-progress-fill" style="width: 94%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="react-agent-exercise">
+  <h2>Exercise: Full ReAct Agent for Regulatory Investigation</h2>
+
+  <p>Build a complete ReAct agent that investigates a firm: gathers profile data, checks violations, reviews filings, assesses compliance risk, and produces a structured investigation report. This is the capstone for the entire course.</p>
+
+  <h3>Requirements</h3>
+  <ol>
+    <li><strong>Uses all 5 tools</strong> from the Module 1 financial toolkit.</li>
+    <li><strong>ReAct loop</strong> with Thought → Action → Observation cycle.</li>
+    <li><strong>Max iteration guard</strong> — stops gracefully if limit is reached.</li>
+    <li><strong>State tracking</strong> — explicit state dict tracking tools called and findings.</li>
+    <li><strong>Structured logging</strong> — captures every iteration's thought, action, and result.</li>
+    <li><strong>Error handling</strong> — graceful degradation when a tool fails mid-run.</li>
+    <li><strong>Structured output</strong> — final report as JSON with findings and risk assessment.</li>
+  </ol>
+
+  <h3>Validation criteria</h3>
+  <ul>
+    <li>Agent completes investigation using 3+ tools</li>
+    <li>Max iteration guard works (test with low limit)</li>
+    <li>State is tracked across iterations</li>
+    <li>Logging captures all iterations</li>
+    <li>Error handling works (shim simulates 1 tool failure mid-run)</li>
+    <li>Final report is structured JSON with findings and risk assessment</li>
+  </ul>
+
+  <aside class="callout">
+    <strong>Build it:</strong> This exercise ties together everything from all 3 modules: tool definitions (Module 1), the decision to use an agent (Module 2), and the ReAct pattern with all production safeguards (Module 3).
+  </aside>
+
+  <aside class="key-takeaway">
+    A production-ready agent is the ReAct loop plus guardrails: stop conditions, state management, error handling, and observability. The loop is 30 lines. The guardrails are the other 70.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Exercise: Full ReAct Agent for Regulatory Investigation</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 11 of 11</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

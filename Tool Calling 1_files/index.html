@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 1: Tool Calling</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="3"><div class="player-progress-fill" style="width: 3%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="what-is-tool-calling">
+  <h2>What Is Tool Calling?</h2>
+
+  <p>LLMs can't execute code, query databases, or access external systems. They generate text. That's it. <strong>Tool calling</strong> bridges this gap: the model decides <em>what</em> to call and <em>with what arguments</em>, and your code executes it. The model never touches your systems directly.</p>
+
+  <aside class="callout">
+    <strong>Key insight:</strong> The LLM is the decision-maker. Your code is the executor. This separation is fundamental — the model reasons about what action to take, but all actual execution happens in code you control.
+  </aside>
+
+  <h3>The mental model</h3>
+  <ul>
+    <li><strong>Without tools:</strong> User asks a question → LLM generates an answer from training data (may be wrong or outdated).</li>
+    <li><strong>With tools:</strong> User asks a question → LLM decides it needs data → requests a tool call → your code executes it → result goes back to the LLM → LLM generates an informed answer.</li>
+  </ul>
+
+  <h3>Why this matters at FINRA</h3>
+  <p>Regulatory data changes constantly — firm registrations, violation histories, filing statuses. An LLM can't know the current compliance status of firm CRD#12345. But it <em>can</em> decide to call <code>check_compliance_status(firm_id="12345")</code> and use the live result to answer the question.</p>
+
+  <aside class="key-takeaway">
+    Tool calling turns an LLM from a text generator into a reasoning engine that can interact with real systems — while keeping your code in full control of what actually executes.
+  </aside>
+
+  <h3>Go deeper</h3>
+  <p>IBM Technology explains what AI agents are and how tool use enables them to take actions:</p>
+  <div class="video-embed">
+    <iframe src="./F8NKVhkZZWI.html" title="What are AI Agents? — IBM Technology" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" loading="lazy"></iframe>
+  </div>
+</section>
+</div></main><footer class="player-footer"><button class="btn" disabled="">← Previous</button><span class="player-counter">Slide 1 of 11</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

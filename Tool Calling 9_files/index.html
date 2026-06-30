@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 1: Tool Calling</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="26"><div class="player-progress-fill" style="width: 26%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="sequential-tool-chains">
+  <h2>Sequential Tool Chains</h2>
+
+  <p>Sometimes the output of one tool feeds the input of another. Claude handles this naturally across turns: it calls tool A, reads the result, then calls tool B using data from A's result.</p>
+
+  <h3>The multi-turn pattern</h3>
+  <pre><code># Turn 1: "Find violations for firm X and check if they're still registered"
+# Claude calls: get_recent_violations(firm_id="X")
+# You execute, return result
+
+# Turn 2: Claude sees violations, now calls:
+# check_registration_status(firm_id="X")
+# You execute, return result
+
+# Turn 3: Claude synthesizes both results into a final answer</code></pre>
+
+  <h3>Implementing the loop</h3>
+  <pre><code>messages = [{"role": "user", "content": user_query}]
+
+while True:
+    response = client.messages_create(tools=tools, messages=messages)
+
+    if response.stop_reason != "tool_use":
+        break  # Claude is done — final text response
+
+    # Process tool calls and append results
+    tool_results = []
+    for block in response.content:
+        if block.type == "tool_use":
+            result = execute_tool(block.name, block.input)
+            tool_results.append({"type": "tool_result", "tool_use_id": block.id, "content": result})
+
+    messages.append({"role": "assistant", "content": response.content})
+    messages.append({"role": "user", "content": tool_results})</code></pre>
+
+  <aside class="callout">
+    <strong>Try it:</strong> In the sandbox, implement the multi-turn loop for "Find all violations for firm X and then check if their registration is still active." Watch Claude chain two sequential tool calls.
+  </aside>
+
+  <aside class="key-takeaway">
+    Sequential tool chains emerge naturally from the tool-calling loop. The key is the <code>while</code> loop that keeps going until Claude's <code>stop_reason</code> is no longer <code>"tool_use"</code>.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Sequential Tool Chains</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 9 of 11</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

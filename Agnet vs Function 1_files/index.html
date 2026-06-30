@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 2: Agent vs. Function</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="38"><div class="player-progress-fill" style="width: 38%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="spectrum-of-autonomy">
+  <h2>The Spectrum of Autonomy</h2>
+
+  <p>Agent vs. function isn't a binary. It's a spectrum from fully deterministic code to fully autonomous agents. Each step adds capability <em>and</em> complexity. Most production systems live in the middle.</p>
+
+  <h3>Five levels</h3>
+  <ol>
+    <li><strong>Pure function:</strong> Deterministic code. Input → output. No LLM involved. <em>Example: validate a CRD number format.</em></li>
+    <li><strong>LLM function:</strong> Single LLM call, no tools. Input → prompt → response. <em>Example: classify a customer complaint.</em></li>
+    <li><strong>Tool-calling function:</strong> Single LLM call with tools. One round of tool use, then done. <em>Example: look up a firm and summarize its profile.</em></li>
+    <li><strong>Bounded agent:</strong> Loop with tools, but bounded by max iterations or a fixed plan. <em>Example: investigate a firm across 3 data sources.</em></li>
+    <li><strong>Autonomous agent:</strong> Open-ended loop. Decides its own plan, adapts strategy, runs until it decides it's done. <em>Example: conduct a full regulatory examination.</em></li>
+  </ol>
+
+  <aside class="callout">
+    <strong>Try it:</strong> The interactive spectrum below lets you click each level to see its definition, a FINRA example, complexity cost, and when to use it.
+  </aside>
+
+  <h3>The key insight</h3>
+  <p>Level 3 (tool-calling function) handles the vast majority of real-world tasks. Levels 4–5 are powerful but expensive, slow, and hard to debug. Don't reach for an agent when a function will do.</p>
+
+  <aside class="key-takeaway">
+    Start at the lowest level of autonomy that solves the problem. Move up only when you hit a limitation that requires more flexibility.
+  </aside>
+
+  <h3>Go deeper</h3>
+  <p>Andrew Ng explains agentic workflows and why the distinction between agent levels matters for production systems:</p>
+  <div class="video-embed">
+    <iframe src="./KrRD7r7y7NY.html" title="The Rise of AI Agents and Agentic Reasoning — Andrew Ng (BUILD 2024)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" loading="lazy"></iframe>
+  </div>
+</section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 1 of 8</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

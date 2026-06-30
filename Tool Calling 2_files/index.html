@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 1: Tool Calling</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="6"><div class="player-progress-fill" style="width: 6%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="how-claude-tool-use-works">
+  <h2>How Claude Tool Use Works</h2>
+
+  <p>Claude's tool calling follows a precise request/response cycle. Understanding this cycle is the foundation for everything in this course.</p>
+
+  <h3>The four-phase cycle</h3>
+  <ol>
+    <li><strong>Define tools:</strong> You send tool definitions (name, description, input schema) alongside your messages. Claude learns what tools are available.</li>
+    <li><strong>Claude responds with <code>tool_use</code>:</strong> Instead of (or alongside) text, Claude returns a <code>tool_use</code> content block with the tool name and arguments it chose.</li>
+    <li><strong>You execute and return <code>tool_result</code>:</strong> Your code runs the actual function, then sends the result back as a <code>tool_result</code> message.</li>
+    <li><strong>Claude incorporates the result:</strong> Claude reads the tool result and generates its final response, grounded in real data.</li>
+  </ol>
+
+  <pre><code># The message flow:
+# 1. You send:   tools=[...], messages=[user message]
+# 2. Claude returns: content=[{type: "tool_use", name: "get_firm", input: {id: "123"}}]
+# 3. You send:   messages=[..., {role: "user", content: [{type: "tool_result", ...}]}]
+# 4. Claude returns: content=[{type: "text", text: "Firm 123 is..."}]</code></pre>
+
+  <aside class="callout">
+    <strong>Try it:</strong> The interactive visualizer below animates this cycle step by step. Click through each phase to see the exact JSON exchanged at every stage.
+  </aside>
+
+  <h3>Key details</h3>
+  <ul>
+    <li>Claude decides <em>whether</em> to call a tool — it may answer directly if it has enough information.</li>
+    <li>The <code>tool_use</code> block includes a unique <code>id</code> that you must reference in the <code>tool_result</code>.</li>
+    <li>Claude can return multiple <code>tool_use</code> blocks in a single response (parallel calls).</li>
+    <li>The cycle can repeat — Claude may call another tool after seeing the first result.</li>
+  </ul>
+
+  <aside class="callout">
+    <strong>Alternative considered:</strong> Skip native tool use and instead instruct the LLM in the prompt to output JSON describing the tool call, then parse and execute it yourself. This works often enough to be tempting in early prototypes, but it fails predictably in production: the model wraps the JSON in prose, mixes formats across runs, hallucinates parameter names, and gives you no structured signal for when it's calling a tool versus answering directly. Structured tool use gives you typed inputs validated against your schema and a clear <code>tool_use</code> block separate from the prose response. The prompt-and-parse path is acceptable only when your model genuinely doesn't support native tool use; otherwise structured tool use costs nothing extra and saves you the parser.
+  </aside>
+
+  <aside class="key-takeaway">
+    Every tool-calling interaction follows the same four-phase cycle: define → tool_use → execute → tool_result. Master this loop and you can build any tool-calling system.
+  </aside>
+</section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 2 of 11</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

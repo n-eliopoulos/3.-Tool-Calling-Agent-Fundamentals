@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 1: Tool Calling</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="21"><div class="player-progress-fill" style="width: 21%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="multiple-tools">
+  <h2>Multiple Tools</h2>
+
+  <p>Real systems give Claude access to multiple tools. Claude reads all tool descriptions and selects the most appropriate one, or none, if it can answer directly.</p>
+
+  <h3>How Claude selects tools</h3>
+  <ul>
+    <li><strong>Description matching:</strong> Claude compares the user's query against each tool's description to find the best fit.</li>
+    <li><strong>No tool needed:</strong> If Claude can answer from context alone, it responds with text — no tool call.</li>
+    <li><strong>Overlapping tools:</strong> If two tools could work, Claude picks the one whose description best matches. This is why boundary conditions in descriptions matter.</li>
+  </ul>
+
+  <pre><code>tools = [
+    {"name": "get_firm_profile", "description": "Look up basic firm info by CRD number..."},
+    {"name": "get_recent_violations", "description": "Get violation history for a firm..."},
+    {"name": "check_registration_status", "description": "Check if a firm or rep is currently registered..."},
+]
+
+# "Tell me about firm 12345" → get_firm_profile
+# "Any violations for firm 12345?" → get_recent_violations
+# "Is rep #67890 still registered?" → check_registration_status
+# "What is FINRA?" → no tool call (general knowledge)</code></pre>
+
+  <aside class="callout">
+    <strong>Try it:</strong> The sandbox defines 3 FINRA tools. Send queries that require different tools. Then send a query that needs no tools and observe Claude responding directly.
+  </aside>
+
+  <h3>Keeping tool sets focused</h3>
+  <p>More tools means more for Claude to evaluate. In practice, keep tool sets under 10–15 tools. If you need more, use a routing layer to select a relevant subset before sending to Claude.</p>
+
+  <aside class="key-takeaway">
+    Claude's tool selection is driven by descriptions. With well-described tools, it reliably picks the right one — even from a set of similar-sounding options.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Multiple Tools</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 7 of 11</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 3: Agent Patterns (Framework-Free)</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="71"><div class="player-progress-fill" style="width: 71%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="react-pattern">
+  <h2>ReAct: Reason + Act</h2>
+
+  <p>ReAct is the foundational agent pattern. Each iteration has three phases: <strong>Thought</strong> (Claude reasons about what to do next), <strong>Action</strong> (Claude selects a tool call), <strong>Observation</strong> (tool result is returned). Repeat until done. The pattern degrades when an early Thought is wrong: an inaccurate intermediate conclusion shapes the next Action, which shapes the next Observation interpretation, and the error compounds across iterations rather than self-correcting.</p>
+
+  <h3>The ReAct cycle</h3>
+  <pre><code># System prompt instructs Claude to think before acting
+system = """You are a regulatory investigation agent.
+Before each action, emit your reasoning as a Thought.
+Use the available tools to gather data.
+When you have enough information, provide your final answer."""
+
+# The loop
+messages = [{"role": "user", "content": "Investigate firm 12345"}]
+
+while True:
+    response = client.messages_create(
+        system=system, tools=tools, messages=messages
+    )
+
+    if response.stop_reason != "tool_use":
+        break  # Final answer — no more tool calls
+
+    # Execute tool calls, append results
+    messages.append({"role": "assistant", "content": response.content})
+    results = execute_tools(response)
+    messages.append({"role": "user", "content": results})</code></pre>
+
+  <h3>Why "Thought" matters</h3>
+  <p>The system prompt instructs Claude to reason before acting. This isn't just for readability — it improves tool selection accuracy. When Claude explains <em>why</em> it's calling a tool, it makes better choices.</p>
+
+  <aside class="callout">
+    <strong>Try it:</strong> Implement a minimal ReAct loop in the sandbox. The system prompt instructs Claude to emit reasoning before each tool call. Watch the Thought → Action → Observation cycle unfold.
+  </aside>
+
+  <aside class="key-takeaway">
+    ReAct = Reason + Act. The "Reason" step isn't decoration — it's a prompt engineering technique that improves the quality of the "Act" step.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: ReAct: Reason + Act</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 3 of 11</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

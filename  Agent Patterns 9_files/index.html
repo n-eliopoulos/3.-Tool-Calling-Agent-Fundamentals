@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 3: Agent Patterns (Framework-Free)</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="88"><div class="player-progress-fill" style="width: 88%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="error-handling-in-loops">
+  <h2>Error Handling in Agent Loops</h2>
+
+  <p>Agent loops have failure modes that single-pass functions don't: tool failures mid-loop, malformed responses, context window exhaustion, and infinite loops. Each needs specific mitigation.</p>
+
+  <h3>Failure modes and mitigations</h3>
+  <table>
+    <tbody><tr><th>Failure</th><th>Mitigation</th></tr>
+    <tr><td>Tool throws exception mid-loop</td><td>Catch, return error as <code>tool_result</code>, let Claude adapt</td></tr>
+    <tr><td>Claude returns unparseable response</td><td>Retry once, then abort with partial results</td></tr>
+    <tr><td>Context window exhaustion</td><td>Summarize history before it hits the limit</td></tr>
+    <tr><td>Infinite loop (Claude keeps calling same tool)</td><td>Track call history, break if same tool called 3+ times</td></tr>
+  </tbody></table>
+
+  <h3>Graceful degradation</h3>
+  <pre><code>def run_agent_safe(goal, tools, tool_fns, max_iterations=5):
+    messages = [{"role": "user", "content": goal}]
+    partial_results = []
+
+    for i in range(max_iterations):
+        try:
+            response = client.messages_create(tools=tools, messages=messages)
+        except Exception as e:
+            return {"status": "error", "partial": partial_results, "error": str(e)}
+
+        if response.stop_reason != "tool_use":
+            return {"status": "complete", "answer": extract_text(response)}
+
+        for block in response.content:
+            if block.type == "tool_use":
+                try:
+                    result = tool_fns[block.name](**block.input)
+                    partial_results.append({"tool": block.name, "result": result})
+                except Exception as e:
+                    result = f"Error: {e}"
+                # Always return result (success or error)
+
+    return {"status": "max_iterations", "partial": partial_results}</code></pre>
+
+  <aside class="callout">
+    <strong>Try it:</strong> Add comprehensive error handling to the ReAct agent. Test: tool throws exception mid-loop, Claude returns unparseable response, iteration limit hit with partial results.
+  </aside>
+
+  <aside class="key-takeaway">
+    Always return partial results on failure. A half-complete investigation with 3 of 5 data points is more useful than an empty error message.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Error Handling in Agent Loops</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 9 of 11</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

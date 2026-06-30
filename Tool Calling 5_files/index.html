@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 1: Tool Calling</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="15"><div class="player-progress-fill" style="width: 15%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="designing-input-schemas">
+  <h2>Designing Input Schemas</h2>
+
+  <p>Schema design directly affects argument accuracy. Required vs. optional, enums for categorical values, nested objects for complex inputs, and description strings on individual properties all guide Claude toward correct arguments.</p>
+
+  <h3>Schema design patterns</h3>
+  <pre><code>{
+  "name": "check_compliance_status",
+  "description": "Check the compliance status of a FINRA-registered firm.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "firm_id": {
+        "type": "string",
+        "description": "CRD number of the firm"
+      },
+      "rule_category": {
+        "type": "string",
+        "enum": ["trading", "reporting", "communications"],
+        "description": "Category of rules to check"
+      },
+      "date_range": {
+        "type": "object",
+        "properties": {
+          "start": {"type": "string", "description": "ISO date (YYYY-MM-DD)"},
+          "end": {"type": "string", "description": "ISO date (YYYY-MM-DD)"}
+        },
+        "description": "Optional date range to filter results"
+      }
+    },
+    "required": ["firm_id", "rule_category"]
+  }
+}</code></pre>
+
+  <h3>Key principles</h3>
+  <ul>
+    <li><strong>Required vs. optional:</strong> Mark parameters as <code>required</code> only when the tool can't function without them. Optional parameters let Claude omit what isn't needed.</li>
+    <li><strong>Enums:</strong> Use <code>enum</code> for categorical inputs. Claude will pick from the list instead of guessing free-form values.</li>
+    <li><strong>Nested objects:</strong> Group related parameters. Claude handles nested structures well when each property has a description.</li>
+    <li><strong>Property descriptions:</strong> Add <code>description</code> to every property — Claude reads these to understand what values to provide.</li>
+  </ul>
+
+  <aside class="callout">
+    <strong>Try it:</strong> Build the <code>check_compliance_status</code> schema in the sandbox and test it with natural language queries like "Check trading compliance for firm 12345 in Q3 2024."
+  </aside>
+
+  <aside class="key-takeaway">
+    Well-designed schemas constrain Claude's choices to valid values. Enums, required fields, and property descriptions are your primary tools for getting accurate arguments.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Designing Input Schemas</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 5 of 11</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 2: Agent vs. Function</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="44"><div class="player-progress-fill" style="width: 44%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="agent-identity">
+  <h2>Agent Identity: Who Is the Agent Acting As?</h2>
+
+  <p>Most agents at FINRA are acting <strong>on behalf of</strong> a specific user. The user authenticated to a front end, that front end forwarded the request, and somewhere in the chain an agent is doing work, but the user's identity, permissions, and accountability flow through everything the agent does. Background and batch agents that run without a user (overnight risk recalculations, scheduled compliance scans) exist, but the user-initiated case is the dominant production pattern. This slide is about that case.</p>
+
+  <h3>Three questions every user-facing agent must answer</h3>
+  <ol>
+    <li><strong>Who is the user?</strong> Identity comes from an authenticated session — typically OIDC against FINRA's identity provider (FIP).</li>
+    <li><strong>What is the user allowed to do?</strong> The agent's effective permissions are <em>at most</em> the user's permissions. Active Directory groups (or equivalent attribute-based claims) determine which tools and data are available.</li>
+    <li><strong>How does identity propagate?</strong> When the agent calls a downstream service, that service must also know which user the call is for. The agent cannot just use a service account — that would erase the user's identity and break per-user authorization.</li>
+  </ol>
+
+  <h3>Why a service account is not enough <em>when there is a user</em></h3>
+  <table>
+    <tbody><tr><th></th><th>Service-account-only</th><th>On-behalf-of</th></tr>
+    <tr><td>Audit trail</td><td>"The agent did it"</td><td>"User X did it via the agent"</td></tr>
+    <tr><td>Per-user access control</td><td>Either the agent can or can't — same for everyone</td><td>The user's own AD groups gate every call</td></tr>
+    <tr><td>Blast radius if compromised</td><td>Service account's full permissions</td><td>Limited to that one user's permissions</td></tr>
+    <tr><td>Regulatory accountability</td><td>Hard to attribute</td><td>User identity in every log line</td></tr>
+  </tbody></table>
+
+  <p>For genuinely autonomous workloads — overnight batch, scheduled processing, infra automation — a service account is the right call, with audit logs that capture the job context (what was scheduled, by whom, when) instead of a user identity. Don't force an on-behalf-of pattern where there isn't a user to be acting on behalf of.</p>
+
+  <aside class="callout">
+    <strong>Forward reference:</strong> The mechanics of propagating user identity to downstream services — bearer tokens, scoped service tokens, and OAuth 2.0 token exchange (RFC 8693) — are covered in detail in <em>Security, Governance &amp; Data Pipelines</em> (Track 6 Level 300, module 4: Cross-Service Identity &amp; Token Exchange). For now, hold the mental model: <strong>when an agent is acting for a user, that user's identity travels with every call</strong>.
+  </aside>
+
+  <aside class="key-takeaway">
+    The dominant case is on-behalf-of: the agent inherits the user's identity, not its own. Designing a user-facing agent without an answer to "who is this acting as?" creates a system that's impossible to secure, audit, or trust. Genuinely autonomous workloads use service accounts and a different audit model — both patterns are legitimate; pick the right one for the job.
+  </aside>
+</section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 3 of 8</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

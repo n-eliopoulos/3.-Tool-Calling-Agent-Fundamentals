@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 3: Agent Patterns (Framework-Free)</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="79"><div class="player-progress-fill" style="width: 79%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="state-management">
+  <h2>State Management</h2>
+
+  <p>The message history <em>is</em> the state. But it grows with every iteration. Managing context window budget — what to keep, what to summarize, what to drop — is critical for agents that run more than a few iterations.</p>
+
+  <h3>Implicit vs. explicit state</h3>
+  <ul>
+    <li><strong>Implicit (message history):</strong> Everything Claude has seen is in the messages array. Simple, but grows linearly. By iteration 5, you're sending thousands of tokens of history.</li>
+    <li><strong>Explicit (state object):</strong> A separate dict that tracks what the agent has done and learned. Compact, queryable, and doesn't grow with message history.</li>
+  </ul>
+
+  <pre><code>state = {
+    "tools_called": [],
+    "results_received": {},
+    "remaining_budget": 10000,
+    "findings": [],
+}
+
+# Use state to make decisions
+if "get_firm_profile" in state["tools_called"]:
+    # Already have the profile — skip redundant calls
+    pass</code></pre>
+
+  <h3>Context window management</h3>
+  <ul>
+    <li><strong>Summarize old results:</strong> After N iterations, replace detailed tool results with summaries.</li>
+    <li><strong>Drop redundant messages:</strong> If a tool was called and the result was "not found," you don't need the full exchange in history.</li>
+    <li><strong>Keep the system prompt and goal:</strong> These anchor Claude's behavior across iterations.</li>
+  </ul>
+
+  <aside class="callout">
+    <strong>Try it:</strong> Add a <code>state</code> dict to the ReAct agent that tracks tools called, results received, and remaining budget. Use it to avoid redundant tool calls.
+  </aside>
+
+  <aside class="key-takeaway">
+    Explicit state objects give you control over what the agent "remembers" without relying on the growing message history. Use both: messages for Claude, state for your code.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: State Management</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 6 of 11</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

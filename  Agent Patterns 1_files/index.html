@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 3: Agent Patterns (Framework-Free)</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="65"><div class="player-progress-fill" style="width: 65%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="why-framework-free">
+  <h2>Why Framework-Free First?</h2>
+
+  <p>Frameworks hide the mechanics. When something breaks — and it will — you need to understand the loop underneath. We build from scratch first. Then frameworks in Level 200 make sense because you know what they're abstracting.</p>
+
+  <h3>What frameworks abstract away</h3>
+  <ul>
+    <li><strong>The agent loop:</strong> The while loop that drives think → act → observe → repeat.</li>
+    <li><strong>Message history management:</strong> Appending assistant and tool_result messages in the right order.</li>
+    <li><strong>Tool dispatch:</strong> Routing tool_use blocks to the right Python function.</li>
+    <li><strong>Stop conditions:</strong> Deciding when the agent is done.</li>
+    <li><strong>Error recovery:</strong> Handling tool failures mid-loop.</li>
+  </ul>
+
+  <h3>The problem with starting with frameworks</h3>
+  <p>If your first agent is built with LangGraph or Strands, you'll know how to configure the framework — but not how to debug it when it behaves unexpectedly. Every framework bug eventually requires understanding the underlying loop.</p>
+
+  <aside class="callout">
+    <strong>Program principle:</strong> This course builds everything from scratch using Claude's native <code>tool_use</code> API. No LangChain, no LangGraph, no Strands. Those come in Track 3 Level 200, after you understand what they're doing under the hood.
+  </aside>
+
+  <aside class="key-takeaway">
+    Framework-free first isn't anti-framework. It's pro-understanding. Build it once from scratch, then use frameworks with confidence.
+  </aside>
+
+  <h3>Go deeper</h3>
+  <p>Andrew Ng explains why simple, composable agent patterns outperform complex frameworks:</p>
+  <div class="video-embed">
+    <iframe src="./sal78ACtGTc.html" title="What&#39;s Next for AI Agentic Workflows — Andrew Ng" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" loading="lazy"></iframe>
+  </div>
+</section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 1 of 11</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

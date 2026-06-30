@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 1: Tool Calling</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="12"><div class="player-progress-fill" style="width: 12%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="tool-descriptions">
+  <h2>Tool Descriptions: The Prompt Engineering of Tools</h2>
+
+  <p>The <code>description</code> field is a prompt. Claude reads it to decide when to call a tool, when <em>not</em> to call it, and what to expect back. Vague descriptions lead to wrong tool selection. Precise descriptions lead to reliable behavior.</p>
+
+  <h3>Vague vs. precise</h3>
+  <pre><code># ❌ Vague — Claude doesn't know when to use this
+"description": "Gets information about a firm"
+
+# ✅ Precise — Claude knows exactly when and how
+"description": "Look up a FINRA-registered firm's profile by CRD number. Returns firm name, registration status, address, and number of registered representatives. Use this when the user asks about a specific firm's basic information. Do NOT use for violation history or compliance status — use get_recent_violations or check_compliance_status instead."</code></pre>
+
+  <h3>What makes a good tool description</h3>
+  <ul>
+    <li><strong>What it does</strong> — specific action and data returned.</li>
+    <li><strong>When to use it</strong> — the types of queries that should trigger this tool.</li>
+    <li><strong>When NOT to use it</strong> — boundary conditions that prevent wrong selection.</li>
+    <li><strong>What it returns</strong> — the shape and content of the response.</li>
+  </ul>
+
+  <aside class="callout">
+    <strong>Try it:</strong> The comparison tool below shows the same 3-tool set with vague vs. precise descriptions. Send the same 5 queries to each and compare tool selection accuracy.
+  </aside>
+
+  <aside class="key-takeaway">
+    Tool descriptions are as important as system prompts. Invest the same care in writing them — they directly control whether Claude picks the right tool for the job.
+  </aside>
+</section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 4 of 11</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

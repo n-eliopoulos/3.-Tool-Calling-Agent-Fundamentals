@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 2: Agent vs. Function</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><div class="player-progress-fill" style="width: 50%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="when-functions-break-down">
+  <h2>When Functions Break Down</h2>
+
+  <p>Smart functions fail when the task requires capabilities they don't have: multi-step reasoning with branching, adapting strategy based on intermediate results, exploring multiple approaches, or maintaining state across many interactions.</p>
+
+  <h3>Signs you need more than a function</h3>
+  <ul>
+    <li><strong>Branching logic based on results:</strong> "If the firm has violations, check each one. If any are recent, pull the full case file." The next step depends on what the previous step found.</li>
+    <li><strong>Unknown number of steps:</strong> "Investigate this firm thoroughly." You don't know in advance how many tools you'll need.</li>
+    <li><strong>Strategy adaptation:</strong> "If the compliance check fails, try looking at the parent company instead." The approach changes based on what happens.</li>
+    <li><strong>Cross-referencing:</strong> "Find all firms connected to this individual and check each one." The scope expands based on intermediate results.</li>
+  </ul>
+
+  <aside class="callout">
+    <strong>Try it:</strong> The interactive scenarios below present 6 FINRA use cases. Classify each as "function is fine" or "needs agent." The system reveals the answer with an explanation.
+  </aside>
+
+  <h3>The gray zone</h3>
+  <p>Many tasks sit in a gray zone. A function with 2 rounds of tool calling might work. Or you might need a 3-iteration bounded agent. The decision framework in the next slide helps you choose.</p>
+
+  <aside class="key-takeaway">
+    Functions break down when the number of steps, the choice of steps, or the strategy must adapt based on intermediate results. That's when agent patterns earn their complexity cost.
+  </aside>
+</section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 5 of 8</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

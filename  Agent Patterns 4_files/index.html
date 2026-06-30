@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 3: Agent Patterns (Framework-Free)</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="74"><div class="player-progress-fill" style="width: 74%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="react-from-scratch">
+  <h2>Implementing ReAct from Scratch</h2>
+
+  <p>Let's build a complete ReAct agent: the loop, message history management, tool execution dispatch, stop conditions, and maximum iteration guards. Every line explained.</p>
+
+  <h3>The full implementation</h3>
+  <pre><code>def run_agent(goal, tools, tool_functions, max_iterations=5):
+    messages = [{"role": "user", "content": goal}]
+
+    for i in range(max_iterations):
+        response = client.messages_create(
+            system=REACT_SYSTEM_PROMPT,
+            tools=tools,
+            messages=messages,
+        )
+
+        # Stop condition: Claude responded with text only
+        if response.stop_reason != "tool_use":
+            return extract_text(response)
+
+        # Dispatch tool calls
+        messages.append({"role": "assistant", "content": response.content})
+        results = []
+        for block in response.content:
+            if block.type == "tool_use":
+                fn = tool_functions[block.name]
+                result = fn(**block.input)
+                results.append({
+                    "type": "tool_result",
+                    "tool_use_id": block.id,
+                    "content": json.dumps(result),
+                })
+        messages.append({"role": "user", "content": results})
+
+    return "Max iterations reached — partial results available."</code></pre>
+
+  <aside class="callout">
+    <strong>Guided exercise:</strong> Build this complete ReAct agent in the sandbox using the financial toolkit from Module 1. Test with: "Investigate firm X — get their profile, check violations, and assess compliance risk." This is a gated exercise — it must run successfully.
+  </aside>
+
+  <aside class="key-takeaway">
+    A complete ReAct agent is ~30 lines of Python. The loop, dispatch, and stop condition are the entire architecture. Everything else is refinement.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Implementing ReAct from Scratch</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 4 of 11</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

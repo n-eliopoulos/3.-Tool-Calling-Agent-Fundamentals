@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782846000/s8C9gDhRjtXYLDFq4XlVvw/scorm/dad9d629d47fc24a52f6fba07082c63cfd5d45ded886e427fbc14a2da4cbac53/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Calling &amp; Agent Fundamentals</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Tool Calling &amp; Agent Fundamentals</h1><span class="module-label">Module 2: Agent vs. Function</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="56"><div class="player-progress-fill" style="width: 56%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="decision-framework">
+  <h2>A Decision Framework</h2>
+
+  <p>Use this flowchart to decide the right level of autonomy for a task. Start at the top and follow the questions.</p>
+
+  <h3>The flowchart</h3>
+  <ol>
+    <li><strong>Is the task single-step?</strong> (One tool call or none) → <em>Use a smart function.</em></li>
+    <li><strong>Are the steps predictable?</strong> (You know the sequence in advance) → <em>Use a tool-calling function with hardcoded steps.</em></li>
+    <li><strong>Does the strategy need to change based on results?</strong> (Branching, adaptation) → <em>Consider a bounded agent.</em></li>
+    <li><strong>Is there a bounded number of steps?</strong> (You can set a reasonable max) → <em>Use a bounded agent with max iterations.</em></li>
+    <li><strong>Is the scope truly open-ended?</strong> → <em>Use an autonomous agent — but add strong guardrails.</em></li>
+  </ol>
+
+  <h3>FINRA examples</h3>
+  <ul>
+    <li>"Summarize this filing" → Smart function (single-step)</li>
+    <li>"Get firm profile, then check violations" → Tool-calling function (predictable steps)</li>
+    <li>"Investigate this firm's compliance posture" → Bounded agent (adapts based on findings)</li>
+    <li>"Conduct a full regulatory examination" → Autonomous agent (open-ended scope)</li>
+  </ul>
+
+  <aside class="callout">
+    <strong>Try it:</strong> The interactive decision tree below walks you through 5 FINRA scenarios. Answer the questions and the framework recommends an approach.
+  </aside>
+
+  <aside class="key-takeaway">
+    When in doubt, start with a function. You can always add a loop later. It's much harder to simplify an over-engineered agent back to a function.
+  </aside>
+</section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 7 of 8</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>
